@@ -1,23 +1,20 @@
 package com.lastone.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class GoogleSearchPage extends BasePage{
 
-    By isbn = By.cssSelector("div[class='Z0LcW']");
+    @FindBy(css = "div[class='Z0LcW']")
+    private WebElement isbn;
 
     public GoogleSearchPage(WebDriver driver) {
         super(driver);
     }
 
-    public WebElement getIsbn() {
-        return getElement(isbn);
+    public String getIsbn() {
+        return isbn.getText();
     }
-
-    public String findIsbn() {
-        return getIsbn().getText();
-    }
-
 }

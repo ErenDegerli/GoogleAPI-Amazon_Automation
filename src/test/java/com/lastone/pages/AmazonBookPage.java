@@ -1,21 +1,20 @@
 package com.lastone.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class AmazonBookPage extends BasePage {
 
-    By addCartBtn = By.id("add-to-cart-button");
+    @FindBy(id = "add-to-cart-button")
+    private WebElement addCartBtn;
 
     public AmazonBookPage(WebDriver driver) {
         super(driver);
     }
-    public WebElement getAddCartBtn() {
-        return getElement(addCartBtn);
-    }
 
     public void addToCard() {
-        getAddCartBtn().click();
+        addCartBtn.click();
     }
 }

@@ -4,6 +4,8 @@ import com.lastone.pages.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class Page {
@@ -16,7 +18,11 @@ public abstract class Page {
         this.wait = new WebDriverWait(this.driver, 10);
     }
 
-    //abstract methods
-    public abstract WebElement getElement(By locator);
-    public abstract void waitForElementPresent(By locator);
+    public void waitForElementPresent(WebElement element){
+        try {
+            wait.until(ExpectedConditions.visibilityOfAllElements(element));
+        }catch (Exception e) {
+            System.out.println("Some exception/error occured while waiting for element");
+        }
+    }
 }

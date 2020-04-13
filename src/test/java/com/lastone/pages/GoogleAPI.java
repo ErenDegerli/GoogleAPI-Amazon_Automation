@@ -21,4 +21,21 @@ public class GoogleAPI {
         JsonPath js = new JsonPath(response);
         return js.getString("buyLink");
     }
-}
+
+    public static void main(String[] args) {
+
+            try {
+                RestAssured.baseURI= Config.getValue("baseUrl");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String response = given().log().all().queryParam("q", "9786053113867").header("Content-Type","application/json")
+                    .when().log().all().get("/books/v1/volumes/")
+                    .then().log().all().extract().response().asString();
+            JsonPath js = new JsonPath(response);
+            String buyLink = js.getString("buyLink");
+            System.out.println(buyLink);
+        }
+    }
+
