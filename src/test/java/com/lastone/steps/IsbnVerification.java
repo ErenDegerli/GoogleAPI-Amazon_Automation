@@ -7,9 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-
-import java.io.IOException;
-
 public class IsbnVerification {
 
     WebDriver driver;
@@ -19,7 +16,6 @@ public class IsbnVerification {
     private AmazonHomePage amazonHomePage;
     private AmazonResultPage amazonResultPage;
     private GoogleSearchPage googleSearchPage;
-
 
     @BeforeMethod()
     public void initializeTest(){
@@ -41,7 +37,7 @@ public class IsbnVerification {
         amazonHomePage.searchBookOnAmazon(isbn);
         amazonResultPage.getBookPage();
         amazonBookPage.addToCart();
-
+        //assertions
         Assert.assertEquals(Client.getCountry(isbn), country);
         Assert.assertEquals(amazonConfirmationPage.confirmationText(), "Sepete Eklendi");
         Assert.assertEquals(amazonConfirmationPage.price(), expectedPrice);
