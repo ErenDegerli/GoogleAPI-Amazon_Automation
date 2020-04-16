@@ -1,12 +1,12 @@
 package com.lastone.steps;
 
+import com.lastone.client.Client;
 import com.lastone.driver.SetDriver;
 import com.lastone.pages.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
 
 import java.io.IOException;
 
@@ -19,9 +19,9 @@ public class IsbnVerification {
     private AmazonHomePage amazonHomePage;
     private AmazonResultPage amazonResultPage;
     private GoogleSearchPage googleSearchPage;
-    private BuyLinkPage buyLinkPage;
 
-    @BeforeMethod
+
+    @BeforeMethod()
     public void initializeTest(){
         driver = SetDriver.initializeDriver();
         googleHomePage= new GoogleHomePage(driver);
@@ -30,28 +30,31 @@ public class IsbnVerification {
         amazonHomePage = new AmazonHomePage(driver);
         amazonResultPage = new AmazonResultPage(driver);
         googleSearchPage = new GoogleSearchPage(driver);
-        buyLinkPage = new BuyLinkPage(driver);
     }
 
     @Test(dataProvider = "data-provider")
-    public void getIsbnNumber(String authorName, String bookName, String expectedPrice) {
+    public void getIsbnNumber(String authorName, String bookName, String expectedPrice, String country) {
         googleHomePage.getGoogleHomePage();
         googleHomePage.searchBookIsbn(authorName, bookName);
         final String isbn = googleSearchPage.getIsbn();
-        buyLinkPage.landOnBuyLinkPage(isbn);
-        Assert.assertEquals(bookName,buyLinkPage.getBuyLinkTitle());
         amazonHomePage.getAmazonHomePage();
         amazonHomePage.searchBookOnAmazon(isbn);
         amazonResultPage.getBookPage();
-        amazonBookPage.addToCard();
+        amazonBookPage.addToCart();
 
+        Assert.assertEquals(Client.getCountry(isbn), country);
         Assert.assertEquals(amazonConfirmationPage.confirmationText(), "Sepete Eklendi");
         Assert.assertEquals(amazonConfirmationPage.price(), expectedPrice);
     }
 
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+    }
+
     @DataProvider(name = "data-provider")
     public Object[][] dataProviderMethod() {
-        return new Object[][]{{"Özgür Bacaksız", "Bazı Yollar Yalnız Yürünür", "11,39 TL"},
-                              {"Alaeddin Şenel", "Siyasal Düşünceler Tarihi", "36,33 TL"}};
+        return new Object[][]{{"Özgür Bacaksız", "Bazı Yollar Yalnız Yürünür", "11,39 TL","TR"},
+                              {"Gülseren Budayıcıoğlu", "Camdaki Kız", "24,70 TL","TR"}};
     }
 }

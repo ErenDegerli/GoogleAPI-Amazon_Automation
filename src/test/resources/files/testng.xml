@@ -2,7 +2,7 @@
 
 <suite thread-count="2" name="Suite" parallel="tests" verbose="3" >
 
-    <test name="My HubSpot Test Chrome" parallel="methods" thread-count="5">
+    <test name="My Book Test Chrome" parallel="methods" thread-count="5">
         <classes>
             <class name="com.lastone.steps.IsbnVerification" />
         </classes>

@@ -3,7 +3,6 @@ package com.lastone.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class AmazonBookPage extends BasePage {
 
@@ -14,7 +13,7 @@ public class AmazonBookPage extends BasePage {
         super(driver);
     }
 
-    public void addToCard() {
+    public void addToCart() {
         addCartBtn.click();
     }
 }
