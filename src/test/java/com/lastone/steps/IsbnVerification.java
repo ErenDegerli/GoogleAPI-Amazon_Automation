@@ -1,14 +1,15 @@
 package com.lastone.steps;
 
+import com.lastone.client.Client;
 import com.lastone.driver.SetDriver;
 import com.lastone.pages.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
 
 public class IsbnVerification {
 
@@ -19,6 +20,8 @@ public class IsbnVerification {
     private AmazonHomePage amazonHomePage;
     private AmazonResultPage amazonResultPage;
     private GoogleSearchPage googleSearchPage;
+    private BuyLinkPage buyLinkPage;
+    private Client client;
 
     @BeforeMethod
     public void initializeTest(){
@@ -29,6 +32,8 @@ public class IsbnVerification {
         amazonHomePage = new AmazonHomePage(driver);
         amazonResultPage = new AmazonResultPage(driver);
         googleSearchPage = new GoogleSearchPage(driver);
+        buyLinkPage = new BuyLinkPage(driver);
+        client = new Client();
     }
 
 
@@ -37,6 +42,8 @@ public class IsbnVerification {
         googleHomePage.getGoogleHomePage();
         googleHomePage.searchBookIsbn(authorName, bookName);
         final String isbn = googleSearchPage.getIsbn();
+        buyLinkPage.landOnBuyLinkPage(isbn);
+        Assert.assertEquals(bookName,buyLinkPage.getBuyLinkTitle());
         amazonHomePage.getAmazonHomePage();
         amazonHomePage.searchBookOnAmazon(isbn);
         amazonResultPage.getBookPage();
@@ -49,7 +56,7 @@ public class IsbnVerification {
     @DataProvider(name = "data-provider")
     public Object[][] dataProviderMethod() {
         return new Object[][]{{"Özgür Bacaksız", "Bazı Yollar Yalnız Yürünür", "11,39 TL"},
-                              {"Alaeddin Şenel", "Siyasal Düşünceler Tarihi", "24,48 TL"}};
+                              {"Alaeddin Şenel", "Siyasal Düşünceler Tarihi", "36,33 TL"}};
     }
 
 
