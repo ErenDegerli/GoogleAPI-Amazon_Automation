@@ -1,6 +1,5 @@
 package com.lastone.steps;
 
-import com.lastone.client.Client;
 import com.lastone.driver.SetDriver;
 import com.lastone.pages.*;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +20,6 @@ public class IsbnVerification {
     private AmazonResultPage amazonResultPage;
     private GoogleSearchPage googleSearchPage;
     private BuyLinkPage buyLinkPage;
-    private Client client;
 
     @BeforeMethod
     public void initializeTest(){
@@ -33,9 +31,7 @@ public class IsbnVerification {
         amazonResultPage = new AmazonResultPage(driver);
         googleSearchPage = new GoogleSearchPage(driver);
         buyLinkPage = new BuyLinkPage(driver);
-        client = new Client();
     }
-
 
     @Test(dataProvider = "data-provider")
     public void getIsbnNumber(String authorName, String bookName, String expectedPrice) {
@@ -58,6 +54,4 @@ public class IsbnVerification {
         return new Object[][]{{"Özgür Bacaksız", "Bazı Yollar Yalnız Yürünür", "11,39 TL"},
                               {"Alaeddin Şenel", "Siyasal Düşünceler Tarihi", "36,33 TL"}};
     }
-
-
 }
