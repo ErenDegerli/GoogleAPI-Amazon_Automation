@@ -50,7 +50,7 @@ public class IsbnVerification {
 
     @DataProvider(name = "data-provider")
     public Object[][] dataProviderMethod() {
-        return new Object[][]{{"Özgür Bacaksız", "Bazı Yollar Yalnız Yürünür", "11,39 TL","TR"},
+        return new Object[][]{{"Barış Pehlivan", "Metastaz", "16,48 TL","TR"},
                               {"Gülseren Budayıcıoğlu", "Camdaki Kız", "24,70 TL","TR"}};
     }
 }
